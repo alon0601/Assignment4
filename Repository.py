@@ -9,7 +9,7 @@ from DAO import Dao
 
 class Repository(object):
     def __init__(self):
-        self._conn = sqlite3.connect('true_database.db')
+        self._conn = sqlite3.connect('database.db')
 #        self._conn.text_factory = bytes
         self.hats = Dao(Hat, self._conn)
         self.suppliers = Dao(Supplier, self._conn)
