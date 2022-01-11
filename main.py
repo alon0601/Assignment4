@@ -16,6 +16,8 @@ def read_file(path):
 
 
 def main(args):
+    repo = Repository(args)
+    atexit.register(repo._close)
     repo.create_tables()
 
     raws = read_file(args[1])
@@ -34,15 +36,15 @@ def main(args):
     repo.hats.order_by('supplier')
     orders = read_file(args[2])
     with open(args[3], 'w') as f:
-        order_id = 0
+        order_id = 1
         for order in orders:
-            output = order_pizza(order, order_id, args)
+            output = order_pizza(order, order_id, repo)
             order_id += 1
             f.write(output)
             f.write('\n')
 
 
-def order_pizza(order_com, id, args):
+def order_pizza(order_com, id, repo):
     hat_id = repo.hats.find_order("supplier", topping=order_com[1].replace('\n', ''))
     new_order = Order(id, order_com[0], hat_id[0].id)
     repo.orders.insert(new_order)

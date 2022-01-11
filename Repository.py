@@ -2,15 +2,15 @@ import os
 import sqlite3
 import imp
 import atexit
+import sys
 
 from Persistence import *
 from DAO import Dao
 
 
 class Repository(object):
-    def __init__(self):
-        self._conn = sqlite3.connect('database.db')
-#        self._conn.text_factory = bytes
+    def __init__(self, args):
+        self._conn = sqlite3.connect(args[4])
         self.hats = Dao(Hat, self._conn)
         self.suppliers = Dao(Supplier, self._conn)
         self.orders = Dao(Order, self._conn)
@@ -40,7 +40,3 @@ class Repository(object):
                 );
             """)
 
-
-# singleton
-repo = Repository()
-atexit.register(repo._close)
