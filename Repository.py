@@ -24,7 +24,7 @@ class Repository(object):
                 CREATE TABLE hats (
                     id INT PRIMARY KEY,
                     topping STRING NOT NULL,
-                    supplier_id INT REFERENCES Suppliers(id), 
+                    supplier INT REFERENCES Suppliers(id), 
                     quantity INT NOT NULL
                 );
 
@@ -36,7 +36,7 @@ class Repository(object):
                 CREATE TABLE orders (
                     id INT PRIMARY KEY,
                     location STRING NOT NULL,
-                    hats_id INT NOT NULL REFERENCES hats(id)
+                    hat INT NOT NULL REFERENCES hats(id)
                 );
             """)
 

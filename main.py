@@ -31,7 +31,7 @@ def main(args):
         supplier = Supplier(raws[j + n_toppings + 1][0], raws[j + n_toppings + 1][1].replace('\n', ''))
         repo.suppliers.insert(supplier)
 
-    repo.hats.order_by('supplier_id')
+    repo.hats.order_by('supplier')
     orders = read_file(args[2])
     with open(args[3], 'w') as f:
         order_id = 0
@@ -43,16 +43,16 @@ def main(args):
 
 
 def order_pizza(order_com, id, args):
-    hat_id = repo.hats.find_order("supplier_id", topping=order_com[1].replace('\n', ''))
+    hat_id = repo.hats.find_order("supplier", topping=order_com[1].replace('\n', ''))
     new_order = Order(id, order_com[0], hat_id[0].id)
     repo.orders.insert(new_order)
 
-    supplier = repo.suppliers.find(id=hat_id[0].supplier_id)
+    supplier = repo.suppliers.find(id=hat_id[0].supplier)
 
     output = str(hat_id[0].topping) + "," + str(supplier[0].name) + "," + str(order_com[0])
     quantity = hat_id[0].quantity - 1
     if quantity == 0:
-        repo.hats.delete({'id': new_order.hats_id})
+        repo.hats.delete({'id': new_order.hat})
     else:
         repo.hats.update({'id': hat_id[0].id}, {'quantity': quantity})
     return output

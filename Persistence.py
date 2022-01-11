@@ -3,10 +3,10 @@ import atexit
 
 
 class Hat(object):
-    def __init__(self, id, topping, supplier_id, quantity):
+    def __init__(self, id, topping, supplier, quantity):
         self.id = id
         self.topping = topping
-        self.supplier_id = supplier_id
+        self.supplier = supplier
         self.quantity = quantity
 
 
@@ -17,10 +17,10 @@ class Supplier(object):
 
 
 class Order(object):
-    def __init__(self, id, location, hat_id):
+    def __init__(self, id, location, hat):
         self.id = id
         self.location = location
-        self.hats_id = hat_id
+        self.hat = hat
 
 
 
